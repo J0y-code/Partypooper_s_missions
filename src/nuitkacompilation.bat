@@ -1,0 +1,1 @@
+.\.venv\Scripts\python -m nuitka main.py --standalone --include-package=panda3d --include-package=direct --include-package-data=panda3d --include-package-data=direct --include-data-dir=Assets=Assets --include-data-files=MyConfig.prc=MyConfig.prc --disable-ccache --windows-icon-from-ico=inbuild.ico --windows-console-mode=force --output-dir=dist

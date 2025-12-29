@@ -1,0 +1,1 @@
+.venv\Scripts\python.exe init_game.py

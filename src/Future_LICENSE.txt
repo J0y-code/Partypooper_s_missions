@@ -1,0 +1,25 @@
+NOTICE DE DROIT D'AUTEUR ET D'EXCLUSIVITÉ
+
+Copyright © 2025 PFLIEGER-CHAKMA Nathan alias J0ytheC0de. Tous droits réservés.
+
+1. PROPRIÉTÉ EXCLUSIVE
+
+Ce code source, ainsi que tous les fichiers et actifs associés au logiciel sont la propriété exclusive de PFLIEGER-CHAKMA Nathan et sont protégés par les lois sur le droit d'auteur.
+
+2. INTERDICTION DE RÉUTILISATION ET DE DISTRIBUTION
+
+Le Logiciel est fourni "tel quel" pour des raisons d'audit et de transparence *uniquement*.
+
+Vous n'êtes pas autorisé à :
+* Reproduire, copier, modifier, ou créer des œuvres dérivées basées sur ce code.
+* Distribuer, vendre, publier, sous-licencier ou rendre disponible ce code source, en tout ou en partie, sous quelque forme ou par quelque moyen que ce soit sauf si exception indiqué dans un fichier source.
+* Utiliser ce code source dans tout autre projet, commercial ou non-commercial.
+
+Exception générale:
+-Tous fichier ou il est indiquer "la license ne s'applique pas à ce fichier" appartient au domaine publique
+-Pour toute modification ou optimisation pour promouvoir et améliorer ce logiciels contacter le propriétaires du logiciel de puis l'email: npflieger.chakma@gmail.com
+-Ces règles ne s'applique pas à tous fichier située dans le dossier modules ainsi que ses sous_dossier étant donnée de la présence de librairies appartenant à des partie tierce ainsi que des librairies crée par l'auteur considérée comme open-source.
+
+3. AUCUNE GARANTIE
+
+Ce Logiciel est fourni sans aucune garantie, expresse ou implicite. Le détenteur du droit d'auteur ne sera en aucun cas responsable des dommages directs, indirects, spéciaux, accessoires ou consécutifs résultant de l'utilisation ou de l'incapacité d'utiliser le Logiciel.
