@@ -1,0 +1,147 @@
+{
+  "ProjectVersion": "0.2a",
+  "EditorConfig": {
+    "usePixel2D": false,
+    "canvasSize": "(-960.0, 960.0, -540.0, 540.0)"
+  },
+  "ComponentList": {
+    "Storyframe": {
+      "element": {
+        "frameSize": "(-0.75, 1.75, -0.97, 0.97)",
+        "frameColor": "(0.0, 0.0, 0.5, 0.8)",
+        "pos": "LPoint3f(0, 0, 0)",
+        "transparency": "0"
+      },
+      "type": "DirectFrame",
+      "parent": "root",
+      "command": null,
+      "extraArgs": null,
+      "extraOptions": {}
+    },
+    "closestorybtn": {
+      "element": {
+        "relief": "1",
+        "frameColor": "(0.8, 0.2, 0.2, 1.0)",
+        "pad": "(0.1, 0.0)",
+        "pos": "LPoint3f(1.67, 0, 0.87)",
+        "scale": "LVecBase3f(0.1, 0.1, 0.1)",
+        "transparency": "0",
+        "text": "'button'",
+        "text0_text": "'X'",
+        "text1_text": "'X'",
+        "text2_text": "'X'",
+        "text3_text": "'X'"
+      },
+      "type": "DirectButton",
+      "parent": "Storyframe",
+      "command": null,
+      "extraArgs": null,
+      "extraOptions": {
+        "pressEffect": 1
+      }
+    },
+    "Menuleftsidebar": {
+      "element": {
+        "frameSize": "(0.0, 1.0, -1.0, 1.0)",
+        "frameColor": "(0.0, 0.0, 0.0, 0.85)",
+        "pos": "LPoint3f(0, 0, 0)",
+        "transparency": "0"
+      },
+      "type": "DirectFrame",
+      "parent": "a2dLeftCenter",
+      "command": null,
+      "extraArgs": null,
+      "extraOptions": {}
+    },
+    "Title": {
+      "element": {
+        "frameColor": "(0.8, 0.8, 0.8, 0.0)",
+        "pos": "LPoint3f(0, 0, 0)",
+        "scale": "LVecBase3f(0.1, 0.1, 0.1)",
+        "transparency": "0",
+        "text": "'Label'",
+        "text0_text": "\"Partypooper's Missions\"",
+        "text0_pos": "(5.0, 8.0)",
+        "text0_scale": "(0.8, 1.0)",
+        "text0_fg": "LVecBase4f(0, 0, 1, 1)"
+      },
+      "type": "DirectLabel",
+      "parent": "Menuleftsidebar",
+      "command": null,
+      "extraArgs": null,
+      "extraOptions": {}
+    },
+    "Titleliminal": {
+      "element": {
+        "frameColor": "(0.8, 0.8, 0.0, 0.2)",
+        "pos": "LPoint3f(0.5, 0, 0.9)",
+        "scale": "LVecBase3f(0.1, 0.1, 0.1)",
+        "transparency": "0",
+        "text": "'Label'",
+        "text0_text": "'The Backrooms'",
+        "text0_fg": "LVecBase4f(1, 1, 0, 1)"
+      },
+      "type": "DirectLabel",
+      "parent": "Menuleftsidebar",
+      "command": null,
+      "extraArgs": null,
+      "extraOptions": {}
+    },
+    "Buttonframe": {
+      "element": {
+        "frameSize": "(0.05, 0.95, -0.95, 0.7)",
+        "frameColor": "(0.1, 0.1, 0.1, 0.9)",
+        "pos": "LPoint3f(0, 0, 0)",
+        "transparency": "0"
+      },
+      "type": "DirectFrame",
+      "parent": "Menuleftsidebar",
+      "command": null,
+      "extraArgs": null,
+      "extraOptions": {}
+    },
+    "Startbtn": {
+      "element": {
+        "relief": "1",
+        "frameColor": "(0.2, 0.2, 0.2, 1.0)",
+        "frameVisibleScale": "(2.0, 2.0)",
+        "pos": "LPoint3f(0.375, 0, 0.575)",
+        "scale": "LVecBase3f(0.1, 0.1, 0.1)",
+        "transparency": "0",
+        "text": "'button'",
+        "text0_text": "'Jouer'",
+        "text1_text": "'Chargement...'",
+        "text2_text": "'Jouer?'",
+        "text3_text": "'chargement...'"
+      },
+      "type": "DirectButton",
+      "parent": "Buttonframe",
+      "command": null,
+      "extraArgs": null,
+      "extraOptions": {
+        "pressEffect": 1
+      }
+    },
+    "Storybtn": {
+      "element": {
+        "relief": "1",
+        "frameColor": "(0.2, 0.2, 0.2, 1.0)",
+        "frameVisibleScale": "(1.975, 2.0)",
+        "pos": "LPoint3f(0.375, 0, 0.4)",
+        "scale": "LVecBase3f(0.1, 0.1, 0.1)",
+        "transparency": "0",
+        "text": "'button'",
+        "text0_text": "'Histoire'",
+        "text1_text": "'Raconte...'",
+        "text2_text": "'Raconter?'"
+      },
+      "type": "DirectButton",
+      "parent": "Buttonframe",
+      "command": null,
+      "extraArgs": null,
+      "extraOptions": {
+        "pressEffect": 1
+      }
+    }
+  }
+}
