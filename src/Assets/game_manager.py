@@ -118,9 +118,18 @@ class GameManager:
             buf_tex.setMagfilter(Texture.FTLinear)
             buf_tex.setMinfilter(Texture.FTLinear)
 
-        # Attach camera to buffer
+        # Attach camera to buffer and have it follow the main camera transform
         self.buffer_cam = self.parent.makeCamera(self.buffer)
         self.buffer_cam.reparentTo(self.parent.cam)
+
+        # prevent the original camera from drawing the real scene; point it at an empty node
+        from panda3d.core import NodePath
+        empty = NodePath("emptyScene")
+        if hasattr(self.parent.cam, 'node'):
+            try:
+                self.parent.cam.node().setScene(empty)
+            except Exception:
+                pass
 
         lens = self.buffer_cam.node().getLens()
         lens.setFov(120)
@@ -137,7 +146,7 @@ class GameManager:
         self.card.setTransparency(False)
         self.card.setDepthTest(False)
         self.card.setDepthWrite(False)
-        self.card.setBin("fixed", 0)
+        self.card.setBin("fixed", 10)
 
         # Load and apply VHS shader
         self.shader = Shader.load(
@@ -147,8 +156,9 @@ class GameManager:
         )
         self.card.setShader(self.shader)
         self.card.setShaderInput("sceneTex", self.buffer.getTexture())
-        self.card.setShaderInput("curvature", 0.12)
+        self.card.setShaderInput("curvature", 0.8)
         self.card.setShaderInput("vhs_strength", self.vhs_strength)
+        self.card.setShaderInput("zoom", 1.2)
 
         # Start update tasks
         self.parent.taskMgr.add(self.update_shader, "update_shader")

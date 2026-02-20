@@ -10,6 +10,8 @@ uniform sampler2D sceneTex;
 uniform float time;
 uniform float vhs_strength;
 uniform float curvature;
+// zoom factor (>1 zooms in, removing border artifacts from horizontal wobble/curvature)
+uniform float zoom;
 
 in vec2 texcoord;
 out vec4 fragColor;
@@ -30,10 +32,18 @@ vec3 crt_mask(vec2 uv) {
 
 void main() 
 {
+    // apply zoom around the center to hide edges caused by wobble/curvature
+    vec2 uv = texcoord - 0.5;
+    if (zoom != 0.0) {
+        uv /= zoom;
+    }
+    uv += 0.5;
+    uv = clamp(uv, 0.000001, 0.99999);
+
     // -------------------------
     // 1. CRT curvature
     // -------------------------
-    vec2 uv = texcoord - 0.5;
+    uv -= 0.5;
     uv *= 1.0 + curvature * dot(uv, uv);
     uv += 0.5;
     uv = clamp(uv, 0.000001, 0.99999);
@@ -102,8 +112,11 @@ void main()
     // -------------------------
     // 9. Mix final
     // -------------------------
-    vec3 original = texture(sceneTex, texcoord).rgb;
-    vec3 final_col = mix(original, col, vhs_strength);
+    // skip the original image entirely so only the processed result is shown
+    // (previously we mixed with the original, which left a faint uncurved "ghost"
+    // that looked like a doubled image)
+    vec3 final_col = col;
 
-    fragColor = vec4(final_col, vhs_strength);
+    // output fully opaque
+    fragColor = vec4(final_col, 1.0);
 }
