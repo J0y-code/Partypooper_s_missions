@@ -179,6 +179,7 @@ class Terrain:
         body = BulletRigidBodyNode('terrain_collision')
         body.addShape(tri_shape)
         body.setMass(0) # Mass 0 = statique
+        body.setFriction(1)
 
         body_np = self.parent.render.attachNewNode(body)
         body_np.setCollideMask(BitMask32.allOn()) # Masque de collision actif
