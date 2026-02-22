@@ -75,11 +75,13 @@ class Player:
         self.bullet_world.setGravity(Vec3(0, 0, -9.81))
 
 
-        #  formes (debout / accroupi) 
-        self.shape = BulletCapsuleShape(0.4/2, 1.773 - 2*0.4/2, ZUp)   # debout
+        #  formes (debout / accroupi)
+        self._capsule_radius = 0.4/2
+        self._capsule_height = 1.773 - 2*self._capsule_radius
+        self.shape = BulletCapsuleShape(self._capsule_radius, self._capsule_height, ZUp)   # debout
 
 
-        #  character controller (une seule création ici) 
+        #  character controller (une seule création ici)
         self.controller = BulletCharacterControllerNode(self.shape, 0.4, 'Player')
         self.controller_np = self.parentClass.render.attachNewNode(self.controller)
         self.controller_np.setPos(0, 0, 1)
@@ -288,11 +290,12 @@ class Player:
     def _switch_to_crouch(self):
         """Passe en mode accroupi en changeant la forme du controller."""
         if not self.iscrounching:
-            sz = 0.6
-            self.controller.getShape().setScale(Vec3(1, 1, sz))
-            self.controller_np.setScale(Vec3(1, 1, sz))
-            self.controller_np.setZ(self.controller_np.getZ() - 0.4)
-            self.model.setZ(self.CROUCH_MODEL_Z)
+            # calculer nouvelle shape plus courte (même radius)
+            crouch_factor = 0.6
+            new_height = max(0.1, self._capsule_height * crouch_factor)
+            new_shape = BulletCapsuleShape(self._capsule_radius, new_height, ZUp)
+            # remplacer le controller par un nouveau qui utilise la nouvelle shape
+            self._replace_controller(new_shape, self.CROUCH_MODEL_Z)
             self.runspeed = self.CROUCH_RUN_SPEED
             self.walkspeed = self.CROUCH_WALK_SPEED
             self.iscrounching = True
@@ -300,14 +303,48 @@ class Player:
     def _switch_to_stand(self):
         """Passe en mode debout en changeant la forme du controller."""
         if self.iscrounching:
-            sz = 1.0
-            self.controller.getShape().setScale(Vec3(1, 1, sz))
-            self.controller_np.setScale(Vec3(1, 1, sz))
-            self.controller_np.setZ(self.controller_np.getZ() + 0.4)
-            self.model.setZ(self.STAND_MODEL_Z)
+            # revenir à la shape debout initiale
+            new_shape = BulletCapsuleShape(self._capsule_radius, self._capsule_height, ZUp)
+            self._replace_controller(new_shape, self.STAND_MODEL_Z)
             self.runspeed = self.DEFAULT_RUN_SPEED
             self.walkspeed = self.DEFAULT_WALK_SPEED
             self.iscrounching = False
+
+    def _replace_controller(self, new_shape, model_z_offset):
+        """Remplace proprement le BulletCharacterControllerNode par un nouveau utilisant new_shape.
+
+        Préserve position et orientation, ré-attache le modèle et met à jour les références.
+        """
+        # sauvegarder transform
+        pos = self.controller_np.getPos()
+        hpr = self.controller_np.getHpr()
+
+        # tenter de retirer l'ancien controller du monde
+        try:
+            self.bullet_world.removeCharacter(self.controller)
+        except Exception as e:
+            print(f"[Player] Warning removing old controller: {e}")
+
+        # supprimer l'ancien nodepath
+        try:
+            self.controller_np.removeNode()
+        except Exception:
+            pass
+
+        # créer et attacher le nouveau controller
+        self.shape = new_shape
+        self.controller = BulletCharacterControllerNode(self.shape, 0.4, 'Player')
+        self.controller_np = self.parentClass.render.attachNewNode(self.controller)
+        self.controller_np.setPos(pos)
+        self.controller_np.setHpr(hpr)
+        self.bullet_world.attachCharacter(self.controller)
+
+        # ré-attacher le modèle au nouveau controller et ajuster sa hauteur
+        self.model.reparentTo(self.controller_np)
+        self.model.setZ(model_z_offset)
+
+        # mettre à jour la position de référence
+        self.lastpos = self.controller_np.getPos()
 
     def handle_jump(self, mw):
         """Gère le saut."""
@@ -397,8 +434,8 @@ class Player:
         # ===== DIFF COU / CORPS (LOCAL !) =====
         diff = self.neck_np.getH()
 
-        max_angle = 15
-        follow_speed = 30
+        max_angle = 15 if not self.moving else 0
+        follow_speed = 30 if not self.moving else 60
         max_turn_speed = 360  # deg/s
 
         if abs(diff) > max_angle:
@@ -425,9 +462,6 @@ class Player:
 
         self.parentClass.camera.setPos(cam_pos)
         self.parentClass.camera.setHpr(cam_h, cam_p, 0)
-        if self.moving:
-            #self.model.setH(render, self.parentClass.camera.getH())
-            pass
 
         return Task.cont
 
